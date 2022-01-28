@@ -31,14 +31,12 @@ public class Client implements Runnable{
         try {
             int length;
             String msg = "";
-            while ((length = in.readInt()) > 0 || (msg = in.readUTF()).startsWith("registerListener@")) {
-                if(msg.startsWith("registerListener@")) {
-                    System.out.println("zarejestrowano listenera!");
-                    registeredChannels.add(msg.replace("registerListener@",""));
-                    msg = "";
-                    return;
-                }
+            while ((length = in.readInt()) > 0) {
                 msg = in.readUTF();
+                if(msg.startsWith("registerListener@")) {
+                    registeredChannels.add(msg.replace("registerListener@",""));
+                    continue;
+                }
                 byte[] message = new byte[length];
                 in.readFully(message, 0, message.length);
                 for(Client c : ClientManager.getClients().values()) {

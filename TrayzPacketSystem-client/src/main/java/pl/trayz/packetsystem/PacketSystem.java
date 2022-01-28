@@ -73,8 +73,10 @@ public class PacketSystem {
     public static <T extends Packet> void registerListener(Listener<T> listener) {
         listeners.put(listener.getChannel(),listener);
         try {
+            out.writeInt(1);
             out.writeUTF("registerListener@"+listener.getChannel());
             out.flush();
+            Logger.logSuccess("Zarejestrowano listenera!");
         } catch (IOException e) {
             Logger.logError("Nie udalo sie zarejestrowac listenera!");
         }
