@@ -43,6 +43,9 @@ public class Client implements Runnable{
                    if(c.equals(this)) {
                        continue;
                    }
+                   if(!c.getRegisteredChannels().contains(msg)) {
+                       continue;
+                   }
                    c.getOut().writeInt(length);
                    c.getOut().writeUTF(msg);
                    c.getOut().write(message);

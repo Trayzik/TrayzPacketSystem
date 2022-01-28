@@ -48,8 +48,9 @@ public class PacketSystem {
         }
         catch (IOException e) {
             try {
-                assert server != null;
-                server.close();
+                if(server != null) {
+                    server.close();
+                }
             } catch (IOException ignored) {
             }
             Logger.logError("Failed to start packets system!");
