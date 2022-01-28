@@ -17,7 +17,7 @@ public abstract class Listener <T extends Packet> {
         this.packet = packet;
     }
 
-    public abstract void onReceive(Packet packet, String replyTo);
+    public abstract void onReceive(T packet, String replyTo);
 
     public Class<T> getPacket() {
         return packet;
