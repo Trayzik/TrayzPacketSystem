@@ -3,4 +3,6 @@ Api for sending packets.
 
 ## How to use
 
-### Initialize
+### Initialize:
+Server:
+*Method 1*
