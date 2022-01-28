@@ -51,15 +51,20 @@ public class PacketSystem {
                     }
                 }
                 if(listeners.containsKey(channel)) {
-                    listeners.get(channel).onReceive(receivedPacket, receivedPacket.getUuid());
+                    if (receivedPacket.getUuid()==null) {
+                        listeners.get(channel).onReceive(receivedPacket, null);
+                    }else {
+                        listeners.get(channel).onReceive(receivedPacket, receivedPacket.getUuid());
+                    }
                 }
             }
         }
         catch (IOException e) {
+            e.printStackTrace();
             Logger.logError("Nie udalo sie polaczyc z systemem pakietow!");
         }
         finally {
-            Logger.logError("Utracono połączenie z serwere ");
+            Logger.logError("Utracono połączenie z serwerem");
         }
         });
     }
@@ -84,7 +89,7 @@ public class PacketSystem {
     }
 
     public static <T extends Packet> void sendRequestPacket(String channel, Packet packet, int duration, Request<T> request) {
-        Executors.newFixedThreadPool(1).submit(() -> {
+        new Thread(() -> {
             UUID requestUUID = UUID.randomUUID();
             packet.setUuid(requestUUID);
             sendPacket(channel, packet);
@@ -98,7 +103,22 @@ public class PacketSystem {
                 awaitingRequests.remove(requestUUID);
                 request.onComplete();
             }
-        });
+        }).start();
+        /*Executors.newFixedThreadPool(1).submit(() -> {
+            UUID requestUUID = UUID.randomUUID();
+            packet.setUuid(requestUUID);
+            sendPacket(channel, packet);
+            awaitingRequests.put(requestUUID, request);
+            try {
+                Thread.sleep(duration);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            if (awaitingRequests.containsKey(requestUUID)) {
+                awaitingRequests.remove(requestUUID);
+                request.onComplete();
+            }
+        });*/
     };
 
     public static <T extends Packet> void registerListener(Listener<T> listener) {

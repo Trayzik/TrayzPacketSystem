@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import pl.trayz.packetsystem.Packet;
 
+import java.io.Serializable;
+
 /**
  * @Author: Fabian 'Trayz'
  * @Created 28.01.2022
@@ -11,7 +13,7 @@ import pl.trayz.packetsystem.Packet;
  **/
 
 @AllArgsConstructor @Getter
-public class TestPacket extends Packet {
+public class TestPacket extends Packet implements Serializable {
 
     private String jd;
     private int axa;
