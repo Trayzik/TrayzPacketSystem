@@ -6,10 +6,7 @@ import lombok.Setter;
 import pl.trayz.packetsystem.managers.ClientManager;
 import pl.trayz.packetsystem.utils.Logger;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.Socket;
 import java.util.List;
 
@@ -24,16 +21,35 @@ import java.util.List;
 public class Client implements Runnable{
 
     private final Socket socket;
-    private PrintWriter out;
-    private BufferedReader in;
+    private DataOutputStream out;
+    private DataInputStream in;
     private String lastMessage;
-    private List<String> registeredListeners;
+    private List<String> registeredChannels;
 
     @Override
     public void run() {
         try {
-            while ((lastMessage = in.readLine()) != null) {
-                System.out.println(lastMessage);
+            int length;
+            String msg = "";
+            while ((length = in.readInt()) > 0 || (msg = in.readUTF()).startsWith("registerListener@")) {
+                if(msg.startsWith("registerListener@")) {
+                    System.out.println("zarejestrowano listenera!");
+                    registeredChannels.add(msg.replace("registerListener@",""));
+                    msg = "";
+                    return;
+                }
+                msg = in.readUTF();
+                byte[] message = new byte[length];
+                in.readFully(message, 0, message.length);
+                for(Client c : ClientManager.getClients().values()) {
+                   if(c.equals(this)) {
+                       continue;
+                   }
+                   c.getOut().writeInt(message.length);
+                   c.getOut().writeUTF(msg);
+                   c.getOut().write(message);
+                   c.getOut().flush();
+                }
             }
         } catch (IOException ignored) {}
         finally {
