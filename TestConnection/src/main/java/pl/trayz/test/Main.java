@@ -26,6 +26,6 @@ public class Main {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        PacketSystem.sendPacket("test",new TestPacket("Trayz to kox",1337));
-    }
+        PacketSystem.sendPacket("test", new TestPacket("Trayz to kox", 33));
+        }
 }

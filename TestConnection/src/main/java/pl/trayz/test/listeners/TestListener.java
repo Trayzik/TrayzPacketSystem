@@ -18,6 +18,6 @@ public class TestListener extends Listener<TestPacket> {
 
     @Override
     public void onReceive(TestPacket packet, String replyTo) {
-        System.out.println("odebrano pakiet! "+packet.getJd());
+        System.out.println("odebrano pakiet! "+packet.getJd()+" id: "+packet.getAxa());
     }
 }
