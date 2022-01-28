@@ -5,7 +5,7 @@ Api for sending packets
 
 ### Initialize server
 Method 1:
-\nAdd server jar into your dependencies and paste this into your main class:
+<br>Add server jar into your dependencies and paste this into your main class:
 ```java
 PacketSystem.startSystem("host",port);
 ```
