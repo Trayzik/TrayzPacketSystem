@@ -41,3 +41,60 @@ public class ExamplePacket extends Packet {
     }
 }
 ```
+
+### Send Packet
+```java
+PacketSystem.sendPacket("exampleChannel", new ExamplePacket("exampleString", false));
+```
+
+### Example Listener
+```java
+public class ExampleListener extends Listener<ExamplePacket> {
+    
+    public ExampleListener(String channel, Class<ExamplePacket> packet) {
+        super(channel, packet);
+    }
+
+    @Override
+    public void onReceive(ExamplePacket packet, UUID replyTo) {
+        System.out.println("Received example packet with parameters "+packet.getMyString()+" "+packet.isMyBoolean());
+    }
+}
+```
+
+### Register listener
+```java
+PacketSystem.registerListener(new ExampleListener("exampleChannel", ExamplePacket.class));
+```
+
+### Example callback packet
+```java
+PacketSystem.sendRequestPacket("exampleChannel", new ExamplePacket("exampleString", false), 2, new Request<ExamplePacket>() {
+    @Override
+    public void onAnswer(ExamplePacket packet) {
+        System.out.println(packet.getMyString());
+        System.out.println(packet.isMyBoolean());
+    }
+        
+    @Override
+    public void onComplete() {
+        System.out.println("No reply was received");
+    }
+});
+```
+
+### Reply to request
+```java
+public class ExampleListener extends Listener<ExamplePacket> {
+    
+    public ExampleListener(String channel, Class<ExamplePacket> packet) {
+        super(channel, packet);
+    }
+
+    @Override
+    public void onReceive(ExamplePacket packet, UUID replyTo) {
+        if (replyTo==null) return;
+        PacketSystem.sendAnswerPacket(replyTo, new ExamplePacket("exampleString", false));
+    }
+}
+```
