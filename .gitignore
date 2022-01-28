@@ -1,0 +1,4 @@
+# Project exclude paths
+/TestConnection/target/
+/TrayzPacketSystem-client/target/
+/TrayzPacketSystem-server/target/
