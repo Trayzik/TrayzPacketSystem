@@ -102,3 +102,4 @@ public class ExampleListener extends Listener<ExamplePacket> {
     }
 }
 ```
+# Ps. if you want to disable logs use method setLogger in class PacketSystem
