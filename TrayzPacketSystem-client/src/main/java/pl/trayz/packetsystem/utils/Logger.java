@@ -1,6 +1,7 @@
 package pl.trayz.packetsystem.utils;
 
 import lombok.Getter;
+import lombok.Setter;
 
 /**
  * @Author: Fabian 'Trayz'
@@ -11,15 +12,21 @@ import lombok.Getter;
 @Getter
 public class Logger {
 
+    @Setter
+    protected static boolean logError = true;
+    @Setter
+    protected static boolean logSuccess = true;
+
     public static void logError(String message) {
+        if(!logError)
+            return;
         System.err.println("[ERROR] "+message);
     }
 
     public static void logSuccess(String message) {
+        if(!logSuccess)
+            return;
         System.out.println("[SUCCESS] "+message);
     }
 
-    public static void logWarning(String message) {
-        System.err.println("[WARNING] "+message);
-    }
 }

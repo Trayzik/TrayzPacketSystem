@@ -2,6 +2,7 @@ package pl.trayz.packetsystem;
 
 import lombok.Getter;
 import org.nustaq.serialization.FSTConfiguration;
+import pl.trayz.packetsystem.enums.LoggerType;
 import pl.trayz.packetsystem.utils.Logger;
 
 import java.io.*;
@@ -10,7 +11,6 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @Author: Fabian 'Trayz'
@@ -35,7 +35,7 @@ public class PacketSystem {
         service.submit(() -> {
         try (Socket socket = new Socket(hostname, port)) {
             connection = socket;
-            Logger.logSuccess("Polaczono z systemem pakietow!");
+            Logger.logSuccess("Successfully connected with the packets system!");
             out = new DataOutputStream(socket.getOutputStream());
             in = new DataInputStream(socket.getInputStream());
             int length;
@@ -58,7 +58,7 @@ public class PacketSystem {
         catch (IOException ignored) {
         }
         finally {
-            Logger.logError("Utracono połączenie z systemem pakietów!");
+            Logger.logError("Connection with packets system has been lost!");
         }
         });
     }
@@ -71,7 +71,7 @@ public class PacketSystem {
             out.write(message);
             out.flush();
         } catch (IOException e) {
-            Logger.logError("Nie udalo sie wyslac pakietu!");
+            Logger.logError("Failed to send packet!");
         }
     }
 
@@ -106,10 +106,21 @@ public class PacketSystem {
             out.writeInt(1);
             out.writeUTF("registerListener@"+listener.getChannel());
             out.flush();
-            Logger.logSuccess("Zarejestrowano listenera!");
+            Logger.logSuccess("Successfully registered listener!");
         } catch (IOException e) {
-            Logger.logError("Nie udalo sie zarejestrowac listenera!");
+            Logger.logError("Failed to register listener!");
         }
     }
 
+    public static void setLogger(LoggerType loggerType, boolean status) {
+        switch (loggerType){
+            case ERROR:
+                Logger.setLogError(status);
+                break;
+            case SUCCESS:
+                Logger.setLogSuccess(status);
+                break;
+        }
+
+    }
 }

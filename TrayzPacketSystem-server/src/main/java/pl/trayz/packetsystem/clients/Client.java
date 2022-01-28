@@ -55,7 +55,7 @@ public class Client implements Runnable{
                 out.close();
                 in.close();
                 socket.close();
-                Logger.logWarning("Utracono połączenie z użytkownikiem "+socket.getInetAddress().getHostAddress());
+                Logger.logWarning("Connection lost with user "+socket.getInetAddress().getHostAddress());
                 ClientManager.removeClient(socket);
             }
             catch (IOException ignored) {}

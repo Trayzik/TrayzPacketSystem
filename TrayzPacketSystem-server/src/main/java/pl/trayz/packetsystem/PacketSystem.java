@@ -26,12 +26,12 @@ public class PacketSystem {
             port = args.length != 2 ? 33333 : Integer.parseInt(args[1]);
             hostname = args.length != 2 ? "127.0.0.1" : args[1];
         }catch (NumberFormatException e) {
-            Logger.logError("Podaj poprawny port!");
+            Logger.logError("Enter correct port!");
             System.exit(1);
             return;
         }
         if(args.length != 2)
-            Logger.logWarning("Jeśli chcesz mieć inny port niż defaultowy uzupełnij argumenty startowe (ip port)!");
+            Logger.logWarning("If you want to use different port than the default, fill startup arguments (ip port)!");
         startSystem(hostname,port);
     }
 
@@ -40,11 +40,11 @@ public class PacketSystem {
         try {
             server = new ServerSocket(port,50, InetAddress.getByName(host));
             server.setReuseAddress(true);
-            Logger.logSuccess("Pomyslnie uruchomiono system pakietów na porcie "+port+"!");
+            Logger.logSuccess("Successfully started packets system on the port "+port+"!");
 
             while (true) {
                 Socket client = server.accept();
-                Logger.logSuccess("Wykryto połączenie od "+client.getInetAddress().getHostAddress());
+                Logger.logSuccess("Detected connection from "+client.getInetAddress().getHostAddress());
                 ClientManager.createClient(client);
             }
         }
@@ -54,10 +54,10 @@ public class PacketSystem {
                 server.close();
             } catch (IOException ignored) {
             }
-            Logger.logError("Nie udalo sie uruchomic systemu pakietów!");
+            Logger.logError("Failed to start packets system!");
         }
         catch (IllegalArgumentException e) {
-            Logger.logError("Niepoprawny port/hostname!");
+            Logger.logError("Incorrect port or hostname!");
         }
     }
 }
