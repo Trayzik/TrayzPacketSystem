@@ -1,11 +1,16 @@
-# yoczusNatsPacketsSystem
-Api for sending packets based on jnats
+# TrayzPacketsSystem
+Api for sending packets
 
 ## How to use
 
-### Initialize manager
+### Initialize server
+Method 1:
 ```java
-NatsManager.setup("localhost", 4222, "username", "password");
+PacketSystem.startSystem("host",port);
+```
+Method 2:
+```
+Run jar with specified arguments (ip port) or without arguments (with default settings)
 ```
 
 
