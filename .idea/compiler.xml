@@ -11,5 +11,8 @@
         <module name="TrayzPacketSystem-server" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="Testufka" target="8" />
+    </bytecodeTargetLevel>
   </component>
 </project>

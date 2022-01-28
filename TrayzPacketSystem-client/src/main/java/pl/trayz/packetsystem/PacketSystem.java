@@ -21,6 +21,7 @@ import java.util.concurrent.Executors;
 public class PacketSystem {
 
     protected static final ExecutorService service = Executors.newSingleThreadExecutor();
+    protected static final ExecutorService service2 = Executors.newSingleThreadExecutor();
     protected static final FSTConfiguration FST_CONFIG = FSTConfiguration.createDefaultConfiguration();
     private static DataOutputStream out;
     private static DataInputStream in;
@@ -77,11 +78,11 @@ public class PacketSystem {
     }
 
     public static <T extends Packet> void sendRequestPacket(String channel, Packet packet, int duration, Request<T> request) {
-        new Thread(() -> {
             UUID requestUUID = UUID.randomUUID();
             packet.setUuid(requestUUID);
             sendPacket(channel, packet);
             awaitingRequests.put(requestUUID, request);
+        service.submit(() -> {
             try {
                 Thread.sleep(duration);
             } catch (InterruptedException e) {
@@ -91,7 +92,7 @@ public class PacketSystem {
                 awaitingRequests.remove(requestUUID);
                 request.onComplete();
             }
-        }).start();
+        });
     };
 
     public static <T extends Packet> void registerListener(Listener<T> listener) {

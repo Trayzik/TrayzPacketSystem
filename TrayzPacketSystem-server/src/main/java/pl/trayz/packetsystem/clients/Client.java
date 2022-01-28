@@ -43,7 +43,7 @@ public class Client implements Runnable{
                    if(c.equals(this)) {
                        continue;
                    }
-                   c.getOut().writeInt(message.length);
+                   c.getOut().writeInt(length);
                    c.getOut().writeUTF(msg);
                    c.getOut().write(message);
                    c.getOut().flush();
