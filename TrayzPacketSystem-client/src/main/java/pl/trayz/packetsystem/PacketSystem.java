@@ -51,20 +51,14 @@ public class PacketSystem {
                     }
                 }
                 if(listeners.containsKey(channel)) {
-                    if (receivedPacket.getUuid()==null) {
-                        listeners.get(channel).onReceive(receivedPacket, null);
-                    }else {
-                        listeners.get(channel).onReceive(receivedPacket, receivedPacket.getUuid());
-                    }
+                    listeners.get(channel).onReceive(receivedPacket, receivedPacket.getUuid());
                 }
             }
         }
-        catch (IOException e) {
-            e.printStackTrace();
-            Logger.logError("Nie udalo sie polaczyc z systemem pakietow!");
+        catch (IOException ignored) {
         }
         finally {
-            Logger.logError("Utracono połączenie z serwerem");
+            Logger.logError("Utracono połączenie z systemem pakietów!");
         }
         });
     }
@@ -104,21 +98,6 @@ public class PacketSystem {
                 request.onComplete();
             }
         }).start();
-        /*Executors.newFixedThreadPool(1).submit(() -> {
-            UUID requestUUID = UUID.randomUUID();
-            packet.setUuid(requestUUID);
-            sendPacket(channel, packet);
-            awaitingRequests.put(requestUUID, request);
-            try {
-                Thread.sleep(duration);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            if (awaitingRequests.containsKey(requestUUID)) {
-                awaitingRequests.remove(requestUUID);
-                request.onComplete();
-            }
-        });*/
     };
 
     public static <T extends Packet> void registerListener(Listener<T> listener) {
