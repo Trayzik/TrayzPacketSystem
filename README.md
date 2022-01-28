@@ -13,6 +13,9 @@ Method 2:
 ```
 Run jar with specified arguments (ip port) or without arguments (with default settings)
 ```
+```
+java -cp TrayzPacketSystem-server.jar pl.trayz.packetsystem.PacketSystem
+```
 ### Initialize client
 ```java
 PacketSystem.setup("host",port);
