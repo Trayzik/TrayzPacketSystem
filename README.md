@@ -4,7 +4,8 @@ Api for sending packets
 ## How to use
 
 ### Initialize server
-Method 1:
+Ps. default port is 33333
+<br>Method 1:
 <br>Add server jar into your dependencies and paste this into your main class:
 ```java
 PacketSystem.startSystem("host",port);
