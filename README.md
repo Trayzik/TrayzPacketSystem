@@ -15,14 +15,14 @@ Run jar with specified arguments (ip port) or without arguments (with default se
 ```
 ### Initialize client
 ```java
-PacketSystem.setup("hostname",port);
+PacketSystem.setup("host",port);
 ```
 
 
 ### Example Packet
 you can easily add your own variables and getter/setter methods to your packet
 ```java
-public class ExamplePacket extends NatsPacket {
+public class ExamplePacket extends Packet {
     
     private String myString;
     private boolean myBoolean;
