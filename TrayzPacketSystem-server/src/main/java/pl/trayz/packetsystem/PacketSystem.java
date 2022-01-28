@@ -1,7 +1,5 @@
 package pl.trayz.packetsystem;
 
-import lombok.extern.java.Log;
-import pl.trayz.packetsystem.clients.Client;
 import pl.trayz.packetsystem.managers.ClientManager;
 import pl.trayz.packetsystem.utils.Logger;
 
