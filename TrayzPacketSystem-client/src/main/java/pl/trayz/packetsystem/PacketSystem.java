@@ -6,11 +6,11 @@ import pl.trayz.packetsystem.utils.Logger;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.Date;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @Author: Fabian 'Trayz'
@@ -43,9 +43,15 @@ public class PacketSystem {
                 byte[] message = new byte[length];
                 String channel = in.readUTF();
                 in.readFully(message, 0, message.length);
+                Packet receivedPacket = (Packet) FST_CONFIG.asObject(message);
+                if (channel.equals("requests")) {
+                    if (receivedPacket.getUuid()!=null && awaitingRequests.containsKey(receivedPacket.getUuid())) {
+                        awaitingRequests.get(receivedPacket.getUuid()).onAnswer(receivedPacket);
+                        awaitingRequests.remove(receivedPacket.getUuid());
+                    }
+                }
                 if(listeners.containsKey(channel)) {
-                    Packet receivedPacket = (Packet) FST_CONFIG.asObject(message);
-                    listeners.get(channel).onReceive(receivedPacket, null);
+                    listeners.get(channel).onReceive(receivedPacket, receivedPacket.getUuid());
                 }
             }
         }
@@ -69,6 +75,31 @@ public class PacketSystem {
             Logger.logError("Nie udalo sie wyslac pakietu!");
         }
     }
+
+    private static final ConcurrentHashMap<UUID, Request> awaitingRequests = new ConcurrentHashMap<>();
+
+    public static void sendAnswerPacket(UUID replyTo, Packet packet) {
+        packet.setUuid(replyTo);
+        sendPacket("requests", packet);
+    }
+
+    public static <T extends Packet> void sendRequestPacket(String channel, Packet packet, int duration, Request<T> request) {
+        Executors.newFixedThreadPool(1).submit(() -> {
+            UUID requestUUID = UUID.randomUUID();
+            packet.setUuid(requestUUID);
+            sendPacket(channel, packet);
+            awaitingRequests.put(requestUUID, request);
+            try {
+                Thread.sleep(duration);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            if (awaitingRequests.containsKey(requestUUID)) {
+                awaitingRequests.remove(requestUUID);
+                request.onComplete();
+            }
+        });
+    };
 
     public static <T extends Packet> void registerListener(Listener<T> listener) {
         listeners.put(listener.getChannel(),listener);

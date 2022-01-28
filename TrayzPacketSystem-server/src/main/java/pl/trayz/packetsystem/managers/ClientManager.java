@@ -29,6 +29,7 @@ public class ClientManager {
         Client client;
         try {
             client = new Client(socket,new DataOutputStream(socket.getOutputStream()),new DataInputStream(socket.getInputStream()),null,new ArrayList<>());
+            client.getRegisteredChannels().add("requests");
         } catch (IOException e) {
             return;
         }

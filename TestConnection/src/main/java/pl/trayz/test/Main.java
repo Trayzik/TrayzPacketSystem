@@ -1,6 +1,8 @@
 package pl.trayz.test;
 
+import pl.trayz.packetsystem.Packet;
 import pl.trayz.packetsystem.PacketSystem;
+import pl.trayz.packetsystem.Request;
 import pl.trayz.test.listeners.TestListener;
 import pl.trayz.test.packets.TestPacket;
 
@@ -27,5 +29,21 @@ public class Main {
             e.printStackTrace();
         }
         PacketSystem.sendPacket("test",new TestPacket("Trayz to kox",1337));
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        PacketSystem.sendRequestPacket("test", new TestPacket("jebacdisa", 123), 2000, new Request<TestPacket>() {
+            @Override
+            public void onAnswer(TestPacket packet) {
+                System.out.println("odpowiedz "+packet.getJd());
+            }
+
+            @Override
+            public void onComplete() {
+                System.out.println("nie otrzymano odpowiedzi");
+            }
+        });
     }
 }

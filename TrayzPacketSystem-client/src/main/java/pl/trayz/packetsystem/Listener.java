@@ -1,5 +1,7 @@
 package pl.trayz.packetsystem;
 
+import java.util.UUID;
+
 /**
  * @Author: Fabian 'Trayz'
  * @Created 28.01.2022
@@ -17,7 +19,7 @@ public abstract class Listener <T extends Packet> {
         this.packet = packet;
     }
 
-    public abstract void onReceive(T packet, String replyTo);
+    public abstract void onReceive(T packet, UUID replyTo);
 
     public Class<T> getPacket() {
         return packet;
