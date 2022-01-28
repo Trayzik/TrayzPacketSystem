@@ -4,5 +4,5 @@ Api for sending packets.
 ## How to use
 
 ### Initialize:
-Server:
+#### Server:
 *Method 1*
