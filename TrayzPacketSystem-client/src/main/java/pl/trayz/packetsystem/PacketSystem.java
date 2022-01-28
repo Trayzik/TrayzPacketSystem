@@ -1,6 +1,7 @@
 package pl.trayz.packetsystem;
 
 import lombok.Getter;
+import lombok.Setter;
 import org.nustaq.serialization.FSTConfiguration;
 import pl.trayz.packetsystem.enums.LoggerType;
 import pl.trayz.packetsystem.utils.Logger;
@@ -20,12 +21,13 @@ import java.util.concurrent.Executors;
 
 public class PacketSystem {
 
-    protected static final ExecutorService service = Executors.newSingleThreadExecutor();
-    protected static final ExecutorService service2 = Executors.newSingleThreadExecutor();
+    protected static final ExecutorService service = Executors.newScheduledThreadPool(4);
     protected static final FSTConfiguration FST_CONFIG = FSTConfiguration.createDefaultConfiguration();
     private static DataOutputStream out;
     private static DataInputStream in;
     private static final ConcurrentHashMap<String, Listener> listeners = new ConcurrentHashMap<>();
+    @Getter @Setter
+    private static boolean connected;
 
     public static void setup(String hostname, int port) {
         service.submit(() -> {
@@ -59,6 +61,15 @@ public class PacketSystem {
     }
 
     public static void sendPacket(String channel, Packet packet) {
+        if (!isConnected()) {
+            service.submit(() -> {
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException ignored) {}
+            });
+            sendPacket(channel,packet);
+            return;
+        }
         try {
             byte[] message = FST_CONFIG.asByteArray(packet);
             out.writeInt(message.length);
@@ -96,6 +107,15 @@ public class PacketSystem {
     };
 
     public static <T extends Packet> void registerListener(Listener<T> listener) {
+        if (!isConnected()) {
+            service.submit(() -> {
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException ignored) {}
+            });
+            registerListener(listener);
+            return;
+        }
         listeners.put(listener.getChannel(),listener);
         try {
             out.writeInt(1);
