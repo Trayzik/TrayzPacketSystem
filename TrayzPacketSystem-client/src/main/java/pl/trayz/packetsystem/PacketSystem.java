@@ -23,9 +23,7 @@ public class PacketSystem {
     protected static final ExecutorService service = Executors.newSingleThreadExecutor();
     protected static String lastMessage;
     protected static final FSTConfiguration FST_CONFIG = FSTConfiguration.createDefaultConfiguration();
-    @Getter
     private static final String current_client = String.valueOf(UUID.randomUUID()).split("-")[0];
-    @Getter
     private static Socket connection;
     private static DataOutputStream out;
     private static DataInputStream in;
