@@ -14,7 +14,9 @@ Method 2:
 Run jar with specified arguments (ip port) or without arguments (with default settings)
 ```
 ### Initialize client
-
+```java
+PacketSystem.setup("hostname",port);
+```
 
 
 ### Example Packet
