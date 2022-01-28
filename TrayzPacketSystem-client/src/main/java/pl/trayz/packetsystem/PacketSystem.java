@@ -9,9 +9,7 @@ import pl.trayz.packetsystem.utils.Logger;
 import java.io.*;
 import java.net.Socket;
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.*;
 
 /**
  * @Author: Fabian 'Trayz'
@@ -22,6 +20,7 @@ import java.util.concurrent.Executors;
 public class PacketSystem {
 
     protected static final ExecutorService service = Executors.newScheduledThreadPool(4);
+    private static final ScheduledExecutorService service2 = Executors.newSingleThreadScheduledExecutor();
     protected static final FSTConfiguration FST_CONFIG = FSTConfiguration.createDefaultConfiguration();
     private static DataOutputStream out;
     private static DataInputStream in;
@@ -62,12 +61,9 @@ public class PacketSystem {
 
     public static void sendPacket(String channel, Packet packet) {
         if (!isConnected()) {
-            service.submit(() -> {
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException ignored) {}
-            });
-            sendPacket(channel,packet);
+            service2.schedule(() -> {
+                sendPacket(channel,packet);
+            },100L, TimeUnit.MILLISECONDS);
             return;
         }
         try {
@@ -108,24 +104,22 @@ public class PacketSystem {
 
     public static <T extends Packet> void registerListener(Listener<T> listener) {
         if (!isConnected()) {
-            service.submit(() -> {
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException ignored) {}
-            });
-            registerListener(listener);
+            service2.schedule(() -> {
+                registerListener(listener);
+            },100L, TimeUnit.MILLISECONDS);
             return;
         }
-        listeners.put(listener.getChannel(),listener);
+        listeners.put(listener.getChannel(), listener);
         try {
             out.writeInt(1);
-            out.writeUTF("registerListener@"+listener.getChannel());
+            out.writeUTF("registerListener@" + listener.getChannel());
             out.flush();
-            Logger.logSuccess("Successfully registered listener!");
+            Logger.logSuccess("Successfully registered listener "+listener.getChannel()+"!");
         } catch (IOException e) {
             Logger.logError("Failed to register listener!");
         }
     }
+
 
     public static void setLogger(LoggerType loggerType, boolean status) {
         switch (loggerType){
