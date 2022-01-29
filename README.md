@@ -9,11 +9,11 @@ This packets system allows you to easily and quickly send packets between client
 ## Setup 🚀
 
 ### Initialize server
-Ps. default port is 33333
-<br>Method 1:<br>
-- Add server jar into your dependencies and paste this into your main class: `PacketSystem.startSystem("host",port);` <br>
-Method 2:<br>
-
+Ps. default port is 33333<br>
+#### Method 1: <br>
+- Add server jar into your dependencies and paste this into your main class: `PacketSystem.startSystem("host",port);`
+<br>
+#### Method 2: <br>
 -Run jar with specified arguments (ip port) or without arguments (with default settings)
 
 ### Initialize client
