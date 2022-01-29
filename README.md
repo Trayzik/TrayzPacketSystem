@@ -1,10 +1,11 @@
 <p align="center">
-    <strong>Easly add custom discord widgets to your website.</strong>
+    <strong>Packets system.</strong>
 </p>
 
 <p align="center">
   <img src="https://img.shields.io/badge/license-GNU-yellow.svg?style=for-the-badge" />
 </p>
+
 ## How to use
 
 ### Initialize server
