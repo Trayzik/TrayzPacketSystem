@@ -30,7 +30,7 @@ PacketSystem.setup("host",port);
 ## Examples 📜
 
 ### Example Packet
-you can easily add your own variables and getter/setter methods to your packet
+You can easily add your own variables and getter/setter methods to your packet
 ```java
 public class ExamplePacket extends Packet {
     
@@ -53,11 +53,13 @@ public class ExamplePacket extends Packet {
 ```
 
 ### Send Packet
+You can easily send the packet from any method.
 ```java
 PacketSystem.sendPacket("exampleChannel", new ExamplePacket("exampleString", false));
 ```
 
 ### Example Listener
+Listener for data capture.
 ```java
 public class ExampleListener extends Listener<ExamplePacket> {
     
@@ -73,11 +75,13 @@ public class ExampleListener extends Listener<ExamplePacket> {
 ```
 
 ### Register listener
+You can easily register your listener at any time.
 ```java
 PacketSystem.registerListener(new ExampleListener("exampleChannel", ExamplePacket.class));
 ```
 
 ### Example callback packet
+Request packet with which you can send request and capture data in one method.
 ```java
 PacketSystem.sendRequestPacket("exampleChannel", new ExamplePacket("exampleString", false), 2, new Request<ExamplePacket>() {
     @Override
@@ -94,6 +98,7 @@ PacketSystem.sendRequestPacket("exampleChannel", new ExamplePacket("exampleStrin
 ```
 
 ### Reply to request
+Listener with which you can reply to the request packet.
 ```java
 public class ExampleListener extends Listener<ExamplePacket> {
     
