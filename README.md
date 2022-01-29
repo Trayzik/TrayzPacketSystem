@@ -1,5 +1,5 @@
 # TrayzPacketsSystem
-This packets system allows you to easily and quickly send packets between clients. You can easily send and intercept packets. This system also supports request packets.
+This packets system allows you to easily and quickly send packets between clients. You can easily send and intercept packets. This system also supports request packets. Currently api only supports java.
 
 ## How to use
 
