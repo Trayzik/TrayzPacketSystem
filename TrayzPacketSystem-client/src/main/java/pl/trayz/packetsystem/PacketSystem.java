@@ -19,7 +19,7 @@ import java.util.concurrent.*;
 
 public class PacketSystem {
 
-    protected static final ExecutorService service = Executors.newScheduledThreadPool(4);
+    protected static final ExecutorService CLIENT_THREAD = Executors.newScheduledThreadPool(4);
     private static final ScheduledExecutorService PACKETS_THREAD = Executors.newScheduledThreadPool(4);
     protected static final FSTConfiguration FST_CONFIG = FSTConfiguration.createDefaultConfiguration();
     private static DataOutputStream out;
@@ -31,7 +31,7 @@ public class PacketSystem {
     private static boolean autoReconnect;
 
     public static void setup(String hostname, int port) {
-        service.submit(() -> {
+        CLIENT_THREAD.submit(() -> {
         try (Socket socket = new Socket(hostname, port)) {
             Logger.logSuccess("Successfully connected with the packets system!");
             out = new DataOutputStream(socket.getOutputStream());
