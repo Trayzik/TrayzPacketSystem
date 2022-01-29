@@ -1,6 +1,5 @@
 # TrayzPacketsSystem
-This packets system allows you to easily and quickly send packets between clients.
-Api for sending packets
+This packets system allows you to easily and quickly send packets between clients. You can easily send and intercept packets. This system also supports request packets.
 
 ## How to use
 
