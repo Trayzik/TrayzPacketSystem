@@ -1,5 +1,5 @@
 <p align="center">
-    <strong>Packets system.</strong>
+    <h1>Packets system.</h1>
 </p>
 
 <p align="center">
