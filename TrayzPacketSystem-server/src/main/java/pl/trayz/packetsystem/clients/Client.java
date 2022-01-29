@@ -29,16 +29,21 @@ public class Client implements Runnable{
     @Override
     public void run() {
         try {
-            int length;
-            String msg = "";
-            while ((length = in.readInt()) > 0) {
-                msg = in.readUTF();
+            while (socket.isConnected()) {
+                int length = in.readInt();
+                String msg = in.readUTF();
                 if(msg.startsWith("registerListener@")) {
                     registeredChannels.add(msg.replace("registerListener@",""));
                     continue;
                 }
-                byte[] message = new byte[length];
-                in.readFully(message, 0, message.length);
+                final byte[] bytes = new byte[length];
+                in.readFully(bytes);
+                final int bufferSize = bytes.length + 4;
+                final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream(bufferSize); final DataOutputStream dataOutputStream = new DataOutputStream(byteArrayOutputStream);
+                dataOutputStream.writeInt(bytes.length);
+                dataOutputStream.writeUTF(msg);
+                dataOutputStream.write(bytes, 0, bytes.length);
+                dataOutputStream.flush();
                 for(Client c : ClientManager.getClients().values()) {
                    if(c.equals(this)) {
                        continue;
@@ -46,10 +51,10 @@ public class Client implements Runnable{
                    if(!c.getRegisteredChannels().contains(msg)) {
                        continue;
                    }
-                   c.getOut().writeInt(length);
-                   c.getOut().writeUTF(msg);
-                   c.getOut().write(message);
-                   c.getOut().flush();
+                   if(c.socket.isConnected() && !c.socket.isClosed()) {
+                       c.out.write(byteArrayOutputStream.toByteArray());
+                       c.out.flush();
+                   }
                 }
             }
         } catch (IOException ignored) {}

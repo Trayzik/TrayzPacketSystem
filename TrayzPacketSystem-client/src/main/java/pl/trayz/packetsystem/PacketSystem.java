@@ -20,13 +20,13 @@ import java.util.concurrent.*;
 public class PacketSystem {
 
     protected static final ExecutorService service = Executors.newScheduledThreadPool(4);
-    private static final ScheduledExecutorService service2 = Executors.newSingleThreadScheduledExecutor();
+    private static final ScheduledExecutorService PACKETS_THREAD = Executors.newScheduledThreadPool(4);
     protected static final FSTConfiguration FST_CONFIG = FSTConfiguration.createDefaultConfiguration();
     private static DataOutputStream out;
     private static DataInputStream in;
     private static final ConcurrentHashMap<String, Listener> listeners = new ConcurrentHashMap<>();
     @Getter @Setter
-    private static boolean connected;
+    protected static Socket socket;
     @Getter @Setter
     private static boolean autoReconnect;
 
@@ -36,14 +36,16 @@ public class PacketSystem {
             Logger.logSuccess("Successfully connected with the packets system!");
             out = new DataOutputStream(socket.getOutputStream());
             in = new DataInputStream(socket.getInputStream());
+
             if(listeners.size() != 0) {
                 for(Listener listener : listeners.values()) {
                     registerListener(listener);
                 }
             }
-            connected = true;
-            int length;
-            while ((length = in.readInt()) > 0) {
+            setSocket(socket);
+
+            while (socket.isConnected()) {
+                int length = in.readInt();
                 byte[] message = new byte[length];
                 String channel = in.readUTF();
                 in.readFully(message, 0, message.length);
@@ -59,10 +61,9 @@ public class PacketSystem {
                 }
             }
         }
-        catch (IOException ignored) {
-        }
+        catch (IOException ignored) {}
         finally {
-            setConnected(false);
+            setSocket(null);
             Logger.logError("Connection with packets system has been lost!");
             if(isAutoReconnect()) {
                 Logger.logSuccess("Reconnecting...");
@@ -73,21 +74,25 @@ public class PacketSystem {
     }
 
     public static void sendPacket(String channel, Packet packet) {
-        if (!isConnected()) {
-            service2.schedule(() -> {
-                sendPacket(channel,packet);
-            },100L, TimeUnit.MILLISECONDS);
-            return;
-        }
-        try {
-            byte[] message = FST_CONFIG.asByteArray(packet);
-            out.writeInt(message.length);
-            out.writeUTF(channel);
-            out.write(message);
-            out.flush();
-        } catch (IOException e) {
-            Logger.logError("Failed to send packet!");
-        }
+            if (socket == null || !socket.isConnected()) {
+                return;
+            }
+        PACKETS_THREAD.submit(()-> {
+                try {
+                    byte[] message = FST_CONFIG.asByteArray(packet);
+                    try (final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream(); final DataOutputStream dataOutputStream = new DataOutputStream(byteArrayOutputStream)) {
+                        dataOutputStream.writeInt(message.length);
+                        dataOutputStream.writeUTF(channel);
+                        dataOutputStream.write(message);
+                        dataOutputStream.flush();
+
+                        out.write(byteArrayOutputStream.toByteArray());
+                        out.flush();
+                    }
+                } catch (IOException e) {
+                    Logger.logError("Failed to send packet!");
+                }
+            });
     }
 
     private static final ConcurrentHashMap<UUID, Request> awaitingRequests = new ConcurrentHashMap<>();
@@ -102,35 +107,32 @@ public class PacketSystem {
             packet.setUuid(requestUUID);
             sendPacket(channel, packet);
             awaitingRequests.put(requestUUID, request);
-        service.submit(() -> {
-            try {
-                Thread.sleep(duration);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+        PACKETS_THREAD.schedule(() -> {
             if (awaitingRequests.containsKey(requestUUID)) {
                 awaitingRequests.remove(requestUUID);
                 request.onComplete();
             }
-        });
+        },duration, TimeUnit.MILLISECONDS);
     };
 
     public static <T extends Packet> void registerListener(Listener<T> listener) {
-        if (!isConnected()) {
-            service2.schedule(() -> {
+        if (socket == null || !socket.isConnected()) {
+            PACKETS_THREAD.schedule(() -> {
                 registerListener(listener);
             },100L, TimeUnit.MILLISECONDS);
             return;
         }
-        listeners.put(listener.getChannel(), listener);
-        try {
-            out.writeInt(1);
-            out.writeUTF("registerListener@" + listener.getChannel());
-            out.flush();
-            Logger.logSuccess("Successfully registered listener "+listener.getChannel()+"!");
-        } catch (IOException e) {
-            Logger.logError("Failed to register listener!");
-        }
+        PACKETS_THREAD.submit(()-> {
+            listeners.put(listener.getChannel(), listener);
+            try {
+                out.writeInt(1);
+                out.writeUTF("registerListener@" + listener.getChannel());
+                out.flush();
+                Logger.logSuccess("Successfully registered listener " + listener.getChannel() + "!");
+            } catch (IOException e) {
+                Logger.logError("Failed to register listener!");
+            }
+        });
     }
 
 
