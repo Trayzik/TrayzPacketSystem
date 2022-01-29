@@ -11,9 +11,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
- * @Author: Fabian 'Trayz'
+ * @Author: Trayz
  * @Created 28.01.2022
- * @Class: PacketSystem
  **/
 
 

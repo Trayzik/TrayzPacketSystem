@@ -1,9 +1,8 @@
 package pl.trayz.packetsystem.enums;
 
 /**
- * @Author: Fabian 'Trayz'
+ * @Author: Trayz
  * @Created 28.01.2022
- * @Class: LoggerType
  **/
 
 

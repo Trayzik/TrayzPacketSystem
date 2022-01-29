@@ -10,9 +10,8 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * @Author: Fabian 'Trayz'
+ * @Author: Trayz
  * @Created 28.01.2022
- * @Class: ClientManager
  **/
 
 

@@ -12,9 +12,8 @@ import java.util.*;
 import java.util.concurrent.*;
 
 /**
- * @Author: Fabian 'Trayz'
+ * @Author: Trayz
  * @Created 28.01.2022
- * @Class: PacketSystem
  **/
 
 public class PacketSystem {

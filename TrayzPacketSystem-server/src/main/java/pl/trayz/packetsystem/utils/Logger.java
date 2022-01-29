@@ -3,9 +3,8 @@ package pl.trayz.packetsystem.utils;
 import lombok.Getter;
 
 /**
- * @Author: Fabian 'Trayz'
+ * @Author: Trayz
  * @Created 28.01.2022
- * @Class: LoggerUtil
  **/
 
 @Getter

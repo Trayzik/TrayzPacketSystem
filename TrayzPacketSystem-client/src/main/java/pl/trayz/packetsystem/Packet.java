@@ -7,9 +7,8 @@ import java.io.Serializable;
 import java.util.UUID;
 
 /**
- * @Author: Fabian 'Trayz'
+ * @Author: Trayz
  * @Created 28.01.2022
- * @Class: Packet
  **/
 
 @Getter

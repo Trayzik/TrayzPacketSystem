@@ -11,9 +11,8 @@ import java.net.Socket;
 import java.util.List;
 
 /**
- * @Author: Fabian 'Trayz'
+ * @Author: Trayz
  * @Created 28.01.2022
- * @Class: Client
  **/
 
 

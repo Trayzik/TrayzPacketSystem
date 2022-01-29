@@ -4,9 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * @Author: Fabian 'Trayz'
+ * @Author: Trayz
  * @Created 28.01.2022
- * @Class: LoggerUtil
  **/
 
 @Getter

@@ -3,9 +3,8 @@ package pl.trayz.packetsystem;
 import java.util.UUID;
 
 /**
- * @Author: Fabian 'Trayz'
+ * @Author: Trayz
  * @Created 28.01.2022
- * @Class: Listener
  **/
 
 
