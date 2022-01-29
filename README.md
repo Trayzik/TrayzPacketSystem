@@ -22,6 +22,7 @@ java -cp TrayzPacketSystem-server.jar pl.trayz.packetsystem.PacketSystem
 PacketSystem.setup("host",port);
 ```
 
+## Examples:
 
 ### Example Packet
 you can easily add your own variables and getter/setter methods to your packet
