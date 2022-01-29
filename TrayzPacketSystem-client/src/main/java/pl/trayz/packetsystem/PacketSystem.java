@@ -27,6 +27,8 @@ public class PacketSystem {
     private static final ConcurrentHashMap<String, Listener> listeners = new ConcurrentHashMap<>();
     @Getter @Setter
     private static boolean connected;
+    @Getter @Setter
+    private static boolean autoReconnect;
 
     public static void setup(String hostname, int port) {
         service.submit(() -> {
@@ -34,6 +36,12 @@ public class PacketSystem {
             Logger.logSuccess("Successfully connected with the packets system!");
             out = new DataOutputStream(socket.getOutputStream());
             in = new DataInputStream(socket.getInputStream());
+            if(listeners.size() != 0) {
+                for(Listener listener : listeners.values()) {
+                    registerListener(listener);
+                }
+            }
+            connected = true;
             int length;
             while ((length = in.readInt()) > 0) {
                 byte[] message = new byte[length];
@@ -54,7 +62,12 @@ public class PacketSystem {
         catch (IOException ignored) {
         }
         finally {
+            setConnected(false);
             Logger.logError("Connection with packets system has been lost!");
+            if(isAutoReconnect()) {
+                Logger.logSuccess("Reconnecting...");
+                setup(hostname,port);
+            }
         }
         });
     }
@@ -130,6 +143,6 @@ public class PacketSystem {
                 Logger.setLogSuccess(status);
                 break;
         }
-
     }
+
 }
