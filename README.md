@@ -1,4 +1,5 @@
 # TrayzPacketsSystem
+This packets system allows you to easily and quickly send packets between clients.
 Api for sending packets
 
 ## How to use
