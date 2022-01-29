@@ -74,7 +74,7 @@ public class PacketSystem {
     }
 
     public static void sendPacket(String channel, Packet packet) {
-            if (socket == null || !socket.isConnected()) {
+            if (socket == null || !socket.isConnected() || out != null) {
                 PACKETS_THREAD.schedule(() -> {
                     sendPacket(channel,packet);
                 },100L, TimeUnit.MILLISECONDS);
@@ -119,7 +119,7 @@ public class PacketSystem {
     };
 
     public static <T extends Packet> void registerListener(Listener<T> listener) {
-        if (socket == null || !socket.isConnected()) {
+        if (socket == null || !socket.isConnected() || out != null) {
             PACKETS_THREAD.schedule(() -> {
                 registerListener(listener);
             },100L, TimeUnit.MILLISECONDS);

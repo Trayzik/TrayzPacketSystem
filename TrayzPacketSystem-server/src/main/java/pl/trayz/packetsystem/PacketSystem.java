@@ -37,7 +37,6 @@ public class PacketSystem {
         ServerSocket server = null;
         try {
             server = new ServerSocket(port,50, InetAddress.getByName(host));
-            server.setReuseAddress(true);
             Logger.logSuccess("Successfully started packets system on the port "+port+"!");
 
             while (true) {
