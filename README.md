@@ -102,4 +102,6 @@ public class ExampleListener extends Listener<ExamplePacket> {
     }
 }
 ```
-#### Ps. if you want to disable logs use method setLogger in class PacketSystem
+### Addons
+```You can disable logs using method setLogger in class PacketSystem```<br>
+```You can enable autoreconnect using method setAutoReconnect in class PacketSystem```
