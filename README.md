@@ -110,10 +110,11 @@ public class ExampleListener extends Listener<ExamplePacket> {
 ```
 ### Addons
 
-| You can disable logs using method setLogger in class PacketSystem |
-| ----------------------------------------------------------------- |
+- | You can disable logs using method setLogger in class PacketSystem |
+  | ----------------------------------------------------------------- |
 <br>
-```You can enable autoreconnect using method setAutoReconnect in class PacketSystem```
+- | You can enable autoreconnect using method setAutoReconnect in class PacketSystem |
+  | -------------------------------------------------------------------------------- |
 ## License❤️
 
 Copyright © 2021 [Trayz](https://github.com/Trayzik).<br /> 
