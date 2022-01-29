@@ -113,5 +113,5 @@ public class ExampleListener extends Listener<ExamplePacket> {
 ```You can enable autoreconnect using method setAutoReconnect in class PacketSystem```
 ## License
 
-Copyright © 2021 [Trayz](https://github.com/Trayzik).<br />
+Copyright © 2021 [Trayz](https://github.com/Trayzik).<br /> ❤️
 This project is [GNU](https://github.com/Trayzik/TrayzPacketSystem/blob/master/LICENSE) licensed.
