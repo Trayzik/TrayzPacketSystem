@@ -122,15 +122,20 @@ public class PacketSystem {
         if (socket == null || !socket.isConnected() || out == null) {
             PACKETS_THREAD.schedule(() -> {
                 registerListener(listener);
-            },100L, TimeUnit.MILLISECONDS);
+            }, 100L, TimeUnit.MILLISECONDS);
             return;
         }
-        PACKETS_THREAD.submit(()-> {
+        PACKETS_THREAD.submit(() -> {
             listeners.put(listener.getChannel(), listener);
             try {
-                out.writeInt(1);
-                out.writeUTF("registerListener@" + listener.getChannel());
-                out.flush();
+                try (final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream(); final DataOutputStream dataOutputStream = new DataOutputStream(byteArrayOutputStream)) {
+                    dataOutputStream.writeInt(1);
+                    dataOutputStream.writeUTF("registerListener@" + listener.getChannel());
+                    dataOutputStream.flush();
+
+                    out.write(byteArrayOutputStream.toByteArray());
+                    out.flush();
+                }
                 Logger.logSuccess("Successfully registered listener " + listener.getChannel() + "!");
             } catch (IOException e) {
                 Logger.logError("Failed to register listener!");

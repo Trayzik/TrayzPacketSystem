@@ -57,7 +57,8 @@ public class Client implements Runnable{
                    }
                 }
             }
-        } catch (IOException ignored) {}
+        } catch (IOException ignored) {
+        }
         finally {
             try {
                 out.close();
