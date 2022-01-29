@@ -75,6 +75,9 @@ public class PacketSystem {
 
     public static void sendPacket(String channel, Packet packet) {
             if (socket == null || !socket.isConnected()) {
+                PACKETS_THREAD.schedule(() -> {
+                    sendPacket(channel,packet);
+                },100L, TimeUnit.MILLISECONDS);
                 return;
             }
         PACKETS_THREAD.submit(()-> {
