@@ -12,16 +12,10 @@ This packets system allows you to easily and quickly send packets between client
 Ps. default port is 33333
 <br>Method 1:
 <br>Add server jar into your dependencies and paste this into your main class:
-```java
-PacketSystem.startSystem("host",port);
-```
+- ```java PacketSystem.startSystem("host",port);```
 Method 2:
-```
-Run jar with specified arguments (ip port) or without arguments (with default settings)
-```
-```
-java -cp TrayzPacketSystem-server.jar pl.trayz.packetsystem.PacketSystem
-```
+-Run jar with specified arguments (ip port) or without arguments (with default settings)
+
 ### Initialize client
 ```java
 PacketSystem.setup("host",port);
