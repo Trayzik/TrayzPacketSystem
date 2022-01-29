@@ -1,8 +1,5 @@
 <p align="center">
-    <h1>Packets system.</h1>
-</p>
-
-<p align="center">
+   <h1>Packets system.</h1>
   <img src="https://img.shields.io/badge/license-GNU-yellow.svg?style=for-the-badge" />
 </p>
 
