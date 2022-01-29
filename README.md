@@ -1,7 +1,12 @@
+<p align="center">
+  <img src="https://img.shields.io/badge/Made%20with-Java-1f425f.svg?style=flat-square"/>
+  <img src="https://img.shields.io/badge/License-GNU-blue.svg?style=flat-square"/>
+</p>
+
 # TrayzPacketsSystem
 This packets system allows you to easily and quickly send packets between clients. You can easily send and intercept packets. This system also supports request packets. 
 
-## How to use
+## Setup 🚀
 
 ### Initialize server
 Ps. default port is 33333
