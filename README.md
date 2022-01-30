@@ -1,30 +1,25 @@
-# TrayzPacketsSystem
-Api for sending packets
+<p align="center">
+  <img src="https://img.shields.io/badge/Made%20with-Java-1f425f.svg?style=flat-square"/>
+  <img src="https://img.shields.io/badge/License-GNU-blue.svg?style=flat-square"/>
+</p>
 
-## How to use
+# TrayzPacketsSystem
+This packets system allows you to easily and quickly send packets between clients. You can easily send and intercept packets. This system also supports request packets. 
+
+## Setup 🚀
 
 ### Initialize server
-Ps. default port is 33333
-<br>Method 1:
-<br>Add server jar into your dependencies and paste this into your main class:
-```java
-PacketSystem.startSystem("host",port);
-```
-Method 2:
-```
-Run jar with specified arguments (ip port) or without arguments (with default settings)
-```
-```
-java -cp TrayzPacketSystem-server.jar pl.trayz.packetsystem.PacketSystem
-```
+- Run jar with specified arguments (ip port) or without arguments (with default port 33333)
+
 ### Initialize client
 ```java
 PacketSystem.setup("host",port);
 ```
 
+## Examples 📜
 
 ### Example Packet
-you can easily add your own variables and getter/setter methods to your packet
+You can easily add your own variables and getter/setter methods to your packet
 ```java
 public class ExamplePacket extends Packet {
     
@@ -47,11 +42,13 @@ public class ExamplePacket extends Packet {
 ```
 
 ### Send Packet
+You can easily send the packet from any method.
 ```java
 PacketSystem.sendPacket("exampleChannel", new ExamplePacket("exampleString", false));
 ```
 
 ### Example Listener
+Listener for data capture.
 ```java
 public class ExampleListener extends Listener<ExamplePacket> {
     
@@ -67,11 +64,13 @@ public class ExampleListener extends Listener<ExamplePacket> {
 ```
 
 ### Register listener
+You can easily register your listener at any time.
 ```java
 PacketSystem.registerListener(new ExampleListener("exampleChannel", ExamplePacket.class));
 ```
 
 ### Example callback packet
+Request packet with which you can send request and capture data in one method.
 ```java
 PacketSystem.sendRequestPacket("exampleChannel", new ExamplePacket("exampleString", false), 2, new Request<ExamplePacket>() {
     @Override
@@ -88,6 +87,7 @@ PacketSystem.sendRequestPacket("exampleChannel", new ExamplePacket("exampleStrin
 ```
 
 ### Reply to request
+Listener with which you can reply to the request packet.
 ```java
 public class ExampleListener extends Listener<ExamplePacket> {
     
@@ -102,6 +102,12 @@ public class ExampleListener extends Listener<ExamplePacket> {
     }
 }
 ```
-### Addons
-```You can disable logs using method setLogger in class PacketSystem```<br>
-```You can enable autoreconnect using method setAutoReconnect in class PacketSystem```
+## Addons➕
+
+- You can disable logs using method setLogger in class PacketSystem <br>
+- You can enable autoreconnect using method setAutoReconnect in class PacketSystem
+
+## License❤️
+
+Copyright © 2021 [Trayz](https://github.com/Trayzik).<br /> 
+This project is [GNU](https://github.com/Trayzik/TrayzPacketSystem/blob/master/LICENSE) licensed.
