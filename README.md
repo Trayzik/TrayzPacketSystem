@@ -8,6 +8,27 @@ This packets system allows you to easily and quickly send packets between client
 
 ## Setup 🚀
 
+### Using Maven
+TrayzPakcetsSystem-client is available on maven.
+
+#### Repository
+```xml
+<repository>
+  <id>jitpack.io</id>
+  <url>https://jitpack.io</url>
+</repository>
+```
+#### Dependency
+```xml
+<dependency>
+  <groupId>com.github.Trayzik.TrayzPacketSystem</groupId>
+  <artifactId>TrayzPacketSystem-client</artifactId>
+  <version>Releases</version>
+</dependency>
+```
+
+## Usage ⚒
+
 ### Initialize server
 - Run jar with specified arguments (ip port) or without arguments (with default port 33333)
 
