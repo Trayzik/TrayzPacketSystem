@@ -21,7 +21,7 @@ TrayzPakcetsSystem-client is available on maven.
 #### Dependency
 ```xml
 <dependency>
-<groupId>com.github.Trayzik.TrayzPacketSystem</groupId>
+  <groupId>com.github.Trayzik.TrayzPacketSystem</groupId>
   <artifactId>TrayzPacketSystem-client</artifactId>
   <version>Releases</version>
 </dependency>
