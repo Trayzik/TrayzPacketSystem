@@ -12,14 +12,14 @@ This packets system allows you to easily and quickly send packets between client
 TrayzPakcetsSystem-client is available on maven.
 
 #### Repository
-```
+```xml
 <repository>
   <id>jitpack.io</id>
   <url>https://jitpack.io</url>
 </repository>
 ```
 #### Dependency
-```
+```xml
 <dependency>
 <groupId>com.github.Trayzik.TrayzPacketSystem</groupId>
   <artifactId>TrayzPacketSystem-client</artifactId>
