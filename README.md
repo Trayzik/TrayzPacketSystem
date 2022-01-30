@@ -13,18 +13,18 @@ TrayzPakcetsSystem-client is available on maven.
 
 #### Repository
 ```
-		<repository>
-		    <id>jitpack.io</id>
-		    <url>https://jitpack.io</url>
-		</repository>
+<repository>
+  <id>jitpack.io</id>
+  <url>https://jitpack.io</url>
+</repository>
 ```
 #### Dependency
 ```
 <dependency>
-	    <groupId>com.github.Trayzik.TrayzPacketSystem</groupId>
-	    <artifactId>TrayzPacketSystem-client</artifactId>
-	    <version>Releases</version>
-	</dependency>
+<groupId>com.github.Trayzik.TrayzPacketSystem</groupId>
+  <artifactId>TrayzPacketSystem-client</artifactId>
+  <version>Releases</version>
+</dependency>
 ```
 
 ## Usage ⚒
