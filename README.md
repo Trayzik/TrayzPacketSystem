@@ -109,5 +109,5 @@ public class ExampleListener extends Listener<ExamplePacket> {
 
 ## License❤️
 
-Copyright © 2021 [Trayz](https://github.com/Trayzik).<br /> 
+Copyright © 2022 [Trayz](https://github.com/Trayzik).<br /> 
 This project is [GNU](https://github.com/Trayzik/TrayzPacketSystem/blob/master/LICENSE) licensed.
