@@ -9,11 +9,6 @@ This packets system allows you to easily and quickly send packets between client
 ## Setup 🚀
 
 ### Initialize server
-#### Method 1: <br>
-```java
-PacketSystem.startSystem("host",port);
-```
-#### Method 2: <br>
 - Run jar with specified arguments (ip port) or without arguments (with default port 33333)
 
 ### Initialize client
