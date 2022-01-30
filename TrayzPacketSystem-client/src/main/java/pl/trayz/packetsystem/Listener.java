@@ -27,4 +27,5 @@ public abstract class Listener <T extends Packet> {
     public String getChannel() {
         return channel;
     }
+
 }
