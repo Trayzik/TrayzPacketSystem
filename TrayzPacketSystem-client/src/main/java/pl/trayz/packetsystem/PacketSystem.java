@@ -120,6 +120,10 @@ public class PacketSystem {
 
     public static <T extends Packet> void registerListener(Listener<T> listener) {
         listeners.put(listener.getChannel(), listener);
+        if(socket != null && socket.isConnected()) {
+            registerListenerPacket(listener);
+            Logger.logSuccess("Successfully registered listener " + listener.getChannel() + "!");
+        }
     }
 
     private static <T extends Packet> void registerListenerPacket(Listener<T> listener) {
