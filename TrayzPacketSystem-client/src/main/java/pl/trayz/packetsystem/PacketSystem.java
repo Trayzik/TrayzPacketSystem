@@ -83,15 +83,15 @@ public class PacketSystem {
         PACKETS_THREAD.submit(()-> {
             try {
                 byte[] message = FST_CONFIG.asByteArray(packet);
-                try (final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream(); final DataOutputStream dataOutputStream = new DataOutputStream(byteArrayOutputStream)) {
-                    dataOutputStream.writeInt(message.length);
-                    dataOutputStream.writeUTF(channel);
-                    dataOutputStream.write(message);
-                    dataOutputStream.flush();
+                final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                final DataOutputStream dataOutputStream = new DataOutputStream(byteArrayOutputStream);
+                dataOutputStream.writeInt(message.length);
+                dataOutputStream.writeUTF(channel);
+                dataOutputStream.write(message);
+                dataOutputStream.flush();
 
-                    out.write(byteArrayOutputStream.toByteArray());
-                    out.flush();
-                }
+                out.write(byteArrayOutputStream.toByteArray());
+                out.flush();
             } catch (IOException e) {
                 Logger.logError("Failed to send packet!");
             }
@@ -128,14 +128,13 @@ public class PacketSystem {
 
     private static <T extends Packet> void registerListenerPacket(Listener<T> listener) {
         try {
-            try (final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream(); final DataOutputStream dataOutputStream = new DataOutputStream(byteArrayOutputStream)) {
-                dataOutputStream.writeInt(1);
-                dataOutputStream.writeUTF("registerListener@" + listener.getChannel());
-                dataOutputStream.flush();
-
-                out.write(byteArrayOutputStream.toByteArray());
-                out.flush();
-            }
+            final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            final DataOutputStream dataOutputStream = new DataOutputStream(byteArrayOutputStream);
+            dataOutputStream.writeInt(1);
+            dataOutputStream.writeUTF("registerListener@" + listener.getChannel());
+            dataOutputStream.flush();
+            out.write(byteArrayOutputStream.toByteArray());
+            out.flush();
         } catch (IOException e) {
             Logger.logError("Failed to register listener! "+listener.getChannel());
         }
