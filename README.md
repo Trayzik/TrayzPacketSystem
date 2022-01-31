@@ -23,7 +23,7 @@ TrayzPakcetsSystem-client is available on maven.
 <dependency>
   <groupId>com.github.Trayzik.TrayzPacketSystem</groupId>
   <artifactId>TrayzPacketSystem-client</artifactId>
-  <version>Releases</version>
+  <version>1.1-SNAPSHOT</version>
 </dependency>
 ```
 
