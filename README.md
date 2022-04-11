@@ -31,6 +31,7 @@ TrayzPakcetsSystem-client is available on maven.
 
 ### Initialize server
 - Run jar with specified arguments (ip port) or without arguments (with default port 33333)
+- java -cp TrayzPacketSystem-server.jar pl.trayz.packetsystem.PacketSystem
 
 ### Initialize client
 ```java
